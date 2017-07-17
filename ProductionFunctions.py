@@ -55,7 +55,7 @@ class CobbDouglas:
 		self.ELASTICITIES = self.WEIGHTS[:-1]
 		self.CONSTANT = self.WEIGHTS[self.n_dims-1]
 		return self.ELASTICITIES, self.CONSTANT
-
+		
 #REDO THIS IN LESSER LINES OF CODE
 def randomSample(DATASET, LABELS, ratio):
 	if np.shape(DATASET)[0] != np.shape(LABELS)[0]:

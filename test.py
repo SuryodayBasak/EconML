@@ -3,6 +3,7 @@ import numpy as np
 import theano
 import theano.tensor as T
 import ProductionFunctions as pf
+import Normalize as norm
 from sklearn import neighbors
 
 def findAccuracy(predicted, original):	#make this single line, if needed, or extend it to calculate other metrics
@@ -21,20 +22,26 @@ data_frame['l'] = data_frame['l'].map({'Iris-setosa':2, 'Iris-versicolor':3, 'Ir
 
 #DATASET = data_frame.values[:, 0:-1]
 DATASET = data_frame.values[:, :4]
-print(DATASET)
+#print(DATASET)
 LABELS = data_frame.values[:, 4]
 ############################################################################################
 
 results_original = []
 results_processed = []
 
-for iteration in range(0, 10):
+for iteration in range(0, 1):
 	print('ITERATION = ', iteration+1)
 	
 	training_data, training_labels, test_data, test_labels = pf.randomSample(DATASET, LABELS, 0.8)
-	prep = pf.CobbDouglas(training_data, training_labels)
+	
+	norm_obj = norm.Normalize(training_data, 'train')
+	norm_training_data = norm_obj.getTrainData()
+	print(norm_training_data)
+	norm_test_data = norm_obj.getTestData(test_data)
+	print(norm_test_data)
+	#prep = pf.CobbDouglas(training_data, training_labels)
 	#print('Printing labels: ', training_labels)
-	ELASTICITIES, CONSTANT = prep.findRegressionCoefficients()
+	#ELASTICITIES, CONSTANT = prep.findRegressionCoefficients()
 
 	"""PROCESSED_TRAINING_DATA = pf.elasticExponentiation(training_data, ELASTICITIES, CONSTANT)
 	PROCESSED_TEST_DATA = pf.elasticExponentiation(test_data, ELASTICITIES, CONSTANT)
