@@ -11,7 +11,7 @@ class CobbDouglas:
 	def __init__(self, data, labels):
 		self.DATA = np.log(self.normalizeFeatures(data))
 		self.DATA = np.c_[self.DATA, np.ones(np.shape(self.DATA)[0])] #adding a column of ones to compute the value of c
-		self.LABELS = labels
+		self.LABELS = np.log(labels)
 		
 		self.learning_rate = 0.001
 		self.n_samples, self.n_dims = self.DATA.shape
