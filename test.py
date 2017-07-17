@@ -14,17 +14,16 @@ def findAccuracy(predicted, original):	#make this single line, if needed, or ext
 	return accuracy/N
 		
 		
-data_file = 'iris.csv'
-data_file = 'skin_seg.csv'
+data_file = 'data/iris.csv'
 data_frame = pd.read_csv(data_file, sep = ',', header=0)
-#data_frame['l'] = data_frame['l'].map({'Iris-setosa':2, 'Iris-versicolor':3, 'Iris-virginica':4})
+data_frame['l'] = data_frame['l'].map({'Iris-setosa':2, 'Iris-versicolor':3, 'Iris-virginica':4})
 
-DATASET = data_frame.values[:, 0:-1]
-LABELS = data_frame.values[:, 3]
+
+#DATASET = data_frame.values[:, 0:-1]
+DATASET = data_frame.values[:, :4]
+print(DATASET)
+LABELS = data_frame.values[:, 4]
 ############################################################################################
-
-#print(DATASET)
-#print(LABELS)
 
 results_original = []
 results_processed = []
@@ -34,15 +33,11 @@ for iteration in range(0, 10):
 	
 	training_data, training_labels, test_data, test_labels = pf.randomSample(DATASET, LABELS, 0.8)
 	prep = pf.CobbDouglas(training_data, training_labels)
+	#print('Printing labels: ', training_labels)
 	ELASTICITIES, CONSTANT = prep.findRegressionCoefficients()
-	
-	#PROCESSED_TRAINING_DATA = np.reshape(np.dot(training_data, ELASTICITIES, CONSTANT), (np.shape(training_data)[0],1))
-	#PROCESSED_TEST_DATA = np.reshape(np.dot(test_data, ELASTICITIES, CONSTANT), (np.shape(test_data)[0],1))
-	PROCESSED_TRAINING_DATA = pf.elasticExponentiation(training_data, ELASTICITIES, CONSTANT)
+
+	"""PROCESSED_TRAINING_DATA = pf.elasticExponentiation(training_data, ELASTICITIES, CONSTANT)
 	PROCESSED_TEST_DATA = pf.elasticExponentiation(test_data, ELASTICITIES, CONSTANT)
-	
-	#print(ELASTICITIES, CONSTANT)
-	#print(PROCESSED_TRAINING_DATA)
 
 	#Model implementation on original data
 	clf = neighbors.KNeighborsClassifier(7)
@@ -57,4 +52,4 @@ for iteration in range(0, 10):
 	results_processed.append(findAccuracy(predicted_processed, test_labels))
 
 print('Results on original data: ', sum(results_original)/len(results_original))
-print('Results on processed data: ', sum(results_processed)/len(results_processed))
+print('Results on processed data: ', sum(results_processed)/len(results_processed))"""
