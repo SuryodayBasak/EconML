@@ -46,8 +46,8 @@ class CobbDouglas:
 						})
 		#print('reached here')
 		for i in range(self.n_steps):
-			print ("cost " + str(i+1), train_model())
-			#train_model()
+			#print ("cost " + str(i+1), train_model())
+			train_model()
 
 		
 		self.WEIGHTS = np.squeeze(np.asarray(self.w.eval()))
